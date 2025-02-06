@@ -90,7 +90,7 @@ jobs:
           uses: docker/build-push-action@v4
           with:
             context: .
-            tags: solar-system:{{ github.sha }}
+            tags: ghcr.io/ivanjj22/solar-system:{{ github.sha }}
         
 
         
