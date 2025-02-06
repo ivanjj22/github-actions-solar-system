@@ -75,22 +75,24 @@ jobs:
       name: Docker
       needs: [code-coverage, unit-testing]
       runs-on: ubuntu-latest
+      env:
+        username: ivanjj22
       steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
         
-        - name: DOcker login
+        - name: Docker login
           uses: docker/login-action@v2.2.0
           with:
             registry: ghcr.io
-            username: ivanjj22
+            username: $username
             password: ${{ secrets.GITHUB_TOKEN }}
         
         - name: Docker push
           uses: docker/build-push-action@v4
           with:
             context: .
-            tags: ghcr.io/ivanjj22/solar-system:{{ github.sha }}
+            tags: ghcr.io/$username/solar-system:{{ github.sha }}
         
 
         
