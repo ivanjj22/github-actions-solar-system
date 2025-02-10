@@ -145,7 +145,6 @@ jobs:
               echo "APP_INGRESS_HOST="foo" >> "$GITHUB_OUTPUT"
     
     integration-test:
-      name: Integration testing
       needs: dev-deploy
       uses: ./.github/workflows/reusable-workflow.yml
       with:
