@@ -101,6 +101,8 @@ jobs:
         runs-on: ubuntu-latest
         name: Dev deploy
         needs: docker
+        outputs:
+          APP_INGRESS_URL: ${{ steps.set-ingress-host-address.outputs.APP_INGRESS_HOST }}
         environment: 
           name: development
         steps:
@@ -136,5 +138,18 @@ jobs:
 
           - name: check files
             run: cat kubernetes/development/*.yaml
+
+          - name: Set app ingress host URL
+            id: set-ingress-host-address
+            run: |
+              echo "APP_INGRESS_HOST="foo" >> "$GITHUB_OUTPUT"
+    
+    integration-testing:
+      name: Integration testing
+      needs: dev-deploy
+      uses: ./.github/workflows/reusable-workflow.yml
+      with:
+        ingress-url: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
+
 
         
